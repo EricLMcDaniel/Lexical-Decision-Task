@@ -17,7 +17,7 @@ let welcomeTrial = {
   <p>Press <b>W</b> or <b>N</b> to begin.</p>,
     `,
 
-    // Listen for the SPACE key to be pressed to proceed
+    // Listen for the W or N keys to be pressed to proceed
     choices: ['w', 'n'], 
 };
 
@@ -172,9 +172,10 @@ timeline.push(resultsTrial);
 let debriefTrial = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: `
-    <h1>Thank you for completing this section.</h1> 
+    <h1>Thank you for completing this section.</h1>
+    <h1>Press <b>SPACE</b> to continue</h>
     `,
-    choices: ['NO KEYS'],
+        choices: [' '],
     on_start: function () {
         let data = jsPsych.data
         .get()
@@ -187,3 +188,6 @@ let debriefTrial = {
 timeline.push(debriefTrial);
 
 jsPsych.run(timeline);
+
+// Use the postMessage API to send data to the parent window
+window.parent.postMessage(jsPsych.data.get().csv(), '*');
