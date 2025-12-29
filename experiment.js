@@ -173,7 +173,7 @@ let debriefTrial = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: `
     <h1>Thank you for completing this section.</h1>
-    <h1>Press any key to continue</h>
+    <h1>Press any key to continue.</h>
     `,
     choices: ['any key'],
     on_start: function () {
