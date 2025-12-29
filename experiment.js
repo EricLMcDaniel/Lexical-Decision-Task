@@ -188,3 +188,7 @@ let debriefTrial = {
 timeline.push(debriefTrial);
 
 jsPsych.run(timeline);
+
+// Use the postMessage API to send data to the parent window
+window.parent.postMessage(jsPsych.data.get().csv(), '*');
+parent.postMessage('end study', '*');
