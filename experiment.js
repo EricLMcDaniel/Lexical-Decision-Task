@@ -172,9 +172,10 @@ timeline.push(resultsTrial);
 let debriefTrial = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: `
-    <h1>Thank you for completing this section.</h1> 
+    <h1>Thank you for completing this section.</h1>
+    <h1>Press any key to continue</h>
     `,
-    choices: ['NO KEYS'],
+    choices: ['any key'],
     on_start: function () {
         let data = jsPsych.data
         .get()
