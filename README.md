@@ -15,3 +15,5 @@ For the actual task, there are 9 words each associated with Islam and Judaism. A
 The nonwords were created by taking the previous 28 words(9 for Islam, 9 for Judaism, and 10 for RWA) and converting them into pronounceable nonwords. This creates 56 letter strings.
 
 In both the practice round and the task round, "+++++++" is presented before each string of letters is introduced.
+
+The code presented is designed to be embedded in a Qualtrics survey.
