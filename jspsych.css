@@ -123,3 +123,8 @@
 #jspsych-data-display {
   text-align: left;
 }
+
+#experimentEmbed {
+    width: 100%;
+    height: 500px;
+}

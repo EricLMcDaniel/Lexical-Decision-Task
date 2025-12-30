@@ -191,6 +191,6 @@ timeline.push(debriefTrial);
 
 jsPsych.run(timeline);
 
-window.parent.postMessage(jsPsych.data.get().csv(), '*');
+window.parent.postMessage();
 parent.postMessage('end study', '*');
 
