@@ -173,9 +173,11 @@ let debriefTrial = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: `
     <h1>Thank you for completing this section.</h1>
+
     <h1>Press any key to continue</h>
     `,
         choices: ['any key '],
+
     on_start: function () {
         let data = jsPsych.data
         .get()
@@ -189,5 +191,6 @@ timeline.push(debriefTrial);
 
 jsPsych.run(timeline);
 
-// Use the postMessage API to send data to the parent window
 window.parent.postMessage(jsPsych.data.get().csv(), '*');
+parent.postMessage('end study', '*');
+
