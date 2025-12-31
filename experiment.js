@@ -1,4 +1,22 @@
-let jsPsych = initJsPsych();
+let jsPsych = jsPsych.init({
+    timeline: [/* your timeline elements */],
+    /* other parameters (display_element, etc.) */
+    on_finish: function() {
+        // Code to summarize and save data to Qualtrics Embedded Data fields can go here
+        Qualtrics.SurveyEngine.setEmbeddedData();
+
+        // This simulates a click on the Qualtrics Next button to move to the next part of the survey
+        var nextButton = document.getElementById("NextButton");
+        if (nextButton) {
+            nextButton.click();
+        } else {
+            // Fallback for different Qualtrics versions or survey themes
+            Qualtrics.SurveyEngine.displayNextButton();
+            document.getElementById("NextButton").click();
+        }
+    }
+});
+
 
 let timeline = [];
 
