@@ -14,7 +14,7 @@ let welcomeTrial = {
   <p>Respond as quickly as you can, do not worry about making errors.</p>
   <p> Between the presentation of each string of letters <b>++++++</b> will appear on the screen.</p>
   <p> To get comfortable with the task, you will begin by completing a short practice round.</p>
-  <p>Press <b>W</b> or <b>N</b> to begin.</p>,
+  <p>Press <b>W</b> or <b>N</b> to begin.</p>
     `,
 
     // Listen for the W or N keys to be pressed to proceed
