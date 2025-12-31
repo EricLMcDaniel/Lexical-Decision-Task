@@ -12,7 +12,7 @@ const jsPsych = initJsPsych({
                 this.clickNextButton();
             });
             // Direct fallback if the above scope is unreachable
-            jQuery('#NextButton').click();
+            jQuery('.NextButton').click();
         }
     }
 });
