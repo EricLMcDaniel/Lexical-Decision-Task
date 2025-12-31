@@ -1,22 +1,21 @@
-let jsPsych = jsPsych.init({
-    timeline: [/* your timeline elements */],
-    /* other parameters (display_element, etc.) */
+// 1. Initialize the library with the Qualtrics "Next" logic
+const jsPsych = initJsPsych({
     on_finish: function() {
-        // Code to summarize and save data to Qualtrics Embedded Data fields can go here
-        Qualtrics.SurveyEngine.setEmbeddedData();
+        // Optional: Save a specific score to Qualtrics before finishing
+        Qualtrics.SurveyEngine.setEmbeddedData("final_score", 100);
 
-        // This simulates a click on the Qualtrics Next button to move to the next part of the survey
-        var nextButton = document.getElementById("NextButton");
-        if (nextButton) {
-            nextButton.click();
-        } else {
-            // Fallback for different Qualtrics versions or survey themes
-            Qualtrics.SurveyEngine.displayNextButton();
-            document.getElementById("NextButton").click();
+        // This is the most reliable way to tell Qualtrics the portion is finished
+        // it triggers the "Next" button of the current question
+        const q_this = this; 
+        if (typeof Qualtrics !== 'undefined') {
+            Qualtrics.SurveyEngine.addOnReady(function() {
+                this.clickNextButton();
+            });
+            // Direct fallback if the above scope is unreachable
+            jQuery('#NextButton').click();
         }
     }
 });
-
 
 let timeline = [];
 
