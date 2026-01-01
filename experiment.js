@@ -107,7 +107,7 @@ timeline.push(Testwelcome);
 
 
 // Shuffle the conditions
-TestTrial = jsPsych.randomization.repeat(Test, 1);
+Test = jsPsych.randomization.repeat(Test, 1);
 
 for (let condition of Test) {
     let TestTrial = {
