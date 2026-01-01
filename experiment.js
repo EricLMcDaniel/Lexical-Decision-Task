@@ -7,10 +7,11 @@ const jsPsych = initJsPsych({
         var accuracy = jsPsych.data.get().filter({correct: true}).count() / jsPsych.data.get().count();
         Qualtrics.SurveyEngine.setEmbeddedData("accuracy", accuracy);
 
-        // 4. Trigger the Qualtrics Next button to move to the next survey page
         if (typeof Qualtrics !== 'undefined') {
-            this.clickNextButton();
-        }
+            // Standard Qualtrics API method
+            Qualtrics.SurveyEngine.addOnReady(function() {
+                this.clickNextButton();
+            });
     }
 });
 
