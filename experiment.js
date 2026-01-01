@@ -1,7 +1,11 @@
 // 1. Initialize the library with the Qualtrics "Next" logic
 const jsPsych = initJsPsych({
     on_finish: function() {
-        var experiment_data = jsPsych.data.get().csv();
+        const experiment_data = jsPsych.data.get().csv();
+        window.parent.postMessage({
+        type: 'jsPsych_finish',
+        csvData: results
+    }, "https://utexas.qualtrics.com");
         Qualtrics.SurveyEngine.setEmbeddedData("full_data", experiment_data);
 
         var accuracy = jsPsych.data.get().filter({correct: true}).count() / jsPsych.data.get().count();
