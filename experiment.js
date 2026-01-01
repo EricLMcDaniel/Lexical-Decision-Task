@@ -1,21 +1,23 @@
 // 1. Initialize the library with the Qualtrics "Next" logic
 const jsPsych = initJsPsych({
     on_finish: function() {
-        const experiment_data = jsPsych.data.get().csv();
+        // 1. Calculate Summary Stats
+        var trials = jsPsych.data.get().filter({collect: true});
+        var correct_trials = trials.filter({correct: true});
+        var accuracy = trials.count() > 0 ? (correct_trials.count() / trials.count()) : 0;
+
+        // 2. Prepare Data String (Filtered to stay under Qualtrics character limits)
+        var experiment_data = jsPsych.data.get()
+            .filter({collect: true})
+            .ignore(['stimulus', 'trial_type', 'plugin_version', 'collect', 'internal_node_id'])
+            .csv();
+
+        // 3. Send Message to Qualtrics (The Parent Window)
         window.parent.postMessage({
-        type: 'jsPsych_finish',
-        csvData: results
-    }, "https://utexas.qualtrics.com");
-        Qualtrics.SurveyEngine.setEmbeddedData("full_data", experiment_data);
-
-        var accuracy = jsPsych.data.get().filter({correct: true}).count() / jsPsych.data.get().count();
-        Qualtrics.SurveyEngine.setEmbeddedData("accuracy", accuracy);
-
-        if (typeof Qualtrics !== 'undefined') {
-            // Standard Qualtrics API method
-            Qualtrics.SurveyEngine.addOnReady(function() {
-                this.clickNextButton();
-            });
+            type: 'jsPsych_finish',
+            csvData: experiment_data,
+            accuracy: accuracy
+        }, "https://utexas.qualtrics.com"); 
     }
 });
 
