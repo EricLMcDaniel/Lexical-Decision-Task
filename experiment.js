@@ -107,7 +107,7 @@ timeline.push(Testwelcome);
 
 
 // Shuffle the conditions
-Test = jsPsych.randomization.repeat(Test, 1);
+TestTrial = jsPsych.randomization.repeat(Test, 1);
 
 for (let condition of Test) {
     let TestTrial = {
@@ -195,9 +195,9 @@ let debriefTrial = {
     stimulus: `
     <h1>Thank you for completing this section.</h1>
 
-    <h1>Press any key to continue</h>
+    <h1>Press SPACE to continue</h>
     `,
-        choices: ['any key '],
+        choices: [' '],
 
     on_start: function () {
         let data = jsPsych.data
