@@ -1,18 +1,15 @@
 // 1. Initialize the library with the Qualtrics "Next" logic
 const jsPsych = initJsPsych({
     on_finish: function() {
-        // Optional: Save a specific score to Qualtrics before finishing
-        Qualtrics.SurveyEngine.setEmbeddedData("final_score", 100);
+        var experiment_data = jsPsych.data.get().csv();
+        Qualtrics.SurveyEngine.setEmbeddedData("full_data", experiment_data);
 
-        // This is the most reliable way to tell Qualtrics the portion is finished
-        // it triggers the "Next" button of the current question
-        const q_this = this; 
+        var accuracy = jsPsych.data.get().filter({correct: true}).count() / jsPsych.data.get().count();
+        Qualtrics.SurveyEngine.setEmbeddedData("accuracy", accuracy);
+
+        // 4. Trigger the Qualtrics Next button to move to the next survey page
         if (typeof Qualtrics !== 'undefined') {
-            Qualtrics.SurveyEngine.addOnReady(function() {
-                this.clickNextButton();
-            });
-            // Direct fallback if the above scope is unreachable
-            jQuery('.NextButton').click();
+            this.clickNextButton();
         }
     }
 });
