@@ -2,7 +2,7 @@
 const jsPsych = initJsPsych({
     on_finish: function() {
         const trials = jsPsych.data.get().filter({collect: true});
-        const accuracy = trials.count() > 0 ? (correct_trials.count() / trials.count()) : 0;
+        const accuracy = trials.count() > 0 ? (trials.filter({correct: true}).count() / trials.count()) : 0;
 
         // 2. Prepare Data String (Filtered to stay under Qualtrics character limits)
         var experiment_data = trials
