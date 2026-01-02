@@ -1,21 +1,19 @@
 // 1. Initialize the library with the Qualtrics "Next" logic
 const jsPsych = initJsPsych({
     on_finish: function() {
-        // 1. Calculate Summary Stats
-        var trials = jsPsych.data.get().filter({collect: true});
-        var correct_trials = trials.filter({correct: true});
-        var accuracy = trials.count() > 0 ? (correct_trials.count() / trials.count()) : 0;
+        const trials = jsPsych.data.get().filter({collect: true});
+        const accuracy = trials.count() > 0 ? (correct_trials.count() / trials.count()) : 0;
 
         // 2. Prepare Data String (Filtered to stay under Qualtrics character limits)
         var experiment_data = trials
-            .select(['characters', 'response', 'rt', 'correct'])
+            .ignore(['stimulus', 'trial_type', 'plugin_version', 'collect', 'internal_node_id'])
             .csv();
 
         // 3. Send Message to Qualtrics (The Parent Window)
         window.parent.postMessage({
             type: 'jsPsych_finish',
             csvData: experiment_data,
-            summary_accuracy: accuracy,
+            accuracy: accuracy,
             
         }, "*"); 
     }
