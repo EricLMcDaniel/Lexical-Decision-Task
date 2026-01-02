@@ -191,11 +191,7 @@ timeline.push(resultsTrial);
 
 let debriefTrial = {
     type: jsPsychHtmlKeyboardResponse,
-    stimulus: `
-    <h1>Thank you for completing this section.</h1>
-
-    <h1>Press SPACE to continue</h>
-    `,
+    stimulus: ``,
         choices: [' '],
 
     on_start: function() {
