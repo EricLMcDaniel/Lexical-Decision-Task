@@ -152,12 +152,6 @@ let resultsTrial = {
         let forceOSFSave = false;
         let participantId = jsPsych.data.getURLVariable('rid');
 
-        // 2. FALLBACK: Only if the URL ID is missing, generate a timestamp ID
-        // Note: We DO NOT use 'let' here because the variable is already declared above
-        if (!participantId) {
-            participantId = new Date().toISOString().replace(/T/, '-').replace(/\..+/, '').replace(/:/g, '-');
-        }
-
         // Filter and retrieve results as CSV data
         let fullResults = jsPsych.data.get()
             .filter({ collect: true })
