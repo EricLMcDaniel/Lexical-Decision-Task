@@ -168,7 +168,7 @@ let resultsTrial = {
             },
             body: JSON.stringify({
                 experimentID: "dAg1TTKvRj7l",
-                filename: `ldt-test.csv`,
+                filename: `ldt-${participantId}.csv`,
                 data: fullResults,
             }),
         }).then(() => {
