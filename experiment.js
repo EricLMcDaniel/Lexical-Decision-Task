@@ -149,8 +149,14 @@ let resultsTrial = {
     on_start: function () {
         let prefix = 'ldt';
         let dataPipeExperimentId = 'dAg1TTKvRj7l';
-        let participantId = jsPsych.data.getURLVariable('rid');
         let forceOSFSave = false;
+        let participantId = jsPsych.data.getURLVariable('rid');
+
+        // 2. FALLBACK: Only if the URL ID is missing, generate a timestamp ID
+        // Note: We DO NOT use 'let' here because the variable is already declared above
+        if (!participantId) {
+            participantId = new Date().toISOString().replace(/T/, '-').replace(/\..+/, '').replace(/:/g, '-');
+        }
 
         // Filter and retrieve results as CSV data
         let fullResults = jsPsych.data.get()
@@ -161,17 +167,6 @@ let resultsTrial = {
         const isLocalHost = window.location.href.includes('localhost');
         const destination = isLocalHost ? '/save' : 'https://pipe.jspsych.org/api/data/';
 
-        // Generate a participant ID based on the current timestamp
-        let participantId = new Date().toISOString().replace(/T/, '-').replace(/\..+/, '').replace(/:/g, '-');
-
-        // Dynamically determine if the experiment is currently running locally or on production
-        let isLocalHost = window.location.href.includes('localhost');
-
-        let destination = '/save';
-        if (!isLocalHost || forceOSFSave) {
-            destination = 'https://pipe.jspsych.org/api/data/';
-        }
-
         // Send the results to our saving end point
         fetch(destination, {
             method: 'POST',
@@ -181,7 +176,7 @@ let resultsTrial = {
             },
             body: JSON.stringify({
                 experimentID: dataPipeExperimentId,
-                filename: `${prefix}-${participantId}.csv`,,
+                filename: `${prefix}-${participantId}.csv`,
                 data: fullResults,
             }),
         }).then(() => {
