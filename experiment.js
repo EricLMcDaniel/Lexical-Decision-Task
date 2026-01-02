@@ -7,16 +7,16 @@ const jsPsych = initJsPsych({
         var accuracy = trials.count() > 0 ? (correct_trials.count() / trials.count()) : 0;
 
         // 2. Prepare Data String (Filtered to stay under Qualtrics character limits)
-        var experiment_data = jsPsych.data.get()
-            .filter({collect: true})
-            .ignore(['stimulus', 'trial_type', 'plugin_version', 'collect', 'internal_node_id'])
+        var experiment_data = trials
+            .select(['characters', 'response', 'rt', 'correct'])
             .csv();
 
         // 3. Send Message to Qualtrics (The Parent Window)
         window.parent.postMessage({
             type: 'jsPsych_finish',
             csvData: experiment_data,
-            accuracy: accuracy
+            summary_accuracy: accuracy,
+            summary_rt: mean_rt
         }, "*"); 
     }
 }, 500);
@@ -149,6 +149,7 @@ let resultsTrial = {
     on_start: function () {
         let prefix = 'ldt';
         let dataPipeExperimentId = 'dAg1TTKvRj7l';
+        let participantId = jsPsych.data.getURLVariable('rid');
         let forceOSFSave = false;
 
         // Filter and retrieve results as CSV data
