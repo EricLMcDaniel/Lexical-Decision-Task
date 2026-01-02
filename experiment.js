@@ -19,7 +19,7 @@ const jsPsych = initJsPsych({
             accuracy: accuracy
         }, "https://utexas.qualtrics.com"); 
     }
-});
+}, 500);
 
 let timeline = [];
 
