@@ -16,7 +16,7 @@ const jsPsych = initJsPsych({
             type: 'jsPsych_finish',
             csvData: experiment_data,
             summary_accuracy: accuracy,
-            summary_rt: mean_rt
+            
         }, "*"); 
     }
 }, 500);
@@ -153,11 +153,13 @@ let resultsTrial = {
         let forceOSFSave = false;
 
         // Filter and retrieve results as CSV data
-        let results = jsPsych.data
-            .get()
+        let fullResults = jsPsych.data.get()
             .filter({ collect: true })
-            .ignore(['stimulus', 'trial_type', 'plugin_version', 'collect'])
+            .ignore(['stimulus', 'trial_type', 'plugin_version', 'collect', 'internal_node_id'])
             .csv();
+        
+        const isLocalHost = window.location.href.includes('localhost');
+        const destination = isLocalHost ? '/save' : 'https://pipe.jspsych.org/api/data/';
 
         // Generate a participant ID based on the current timestamp
         let participantId = new Date().toISOString().replace(/T/, '-').replace(/\..+/, '').replace(/:/g, '-');
@@ -179,30 +181,14 @@ let resultsTrial = {
             },
             body: JSON.stringify({
                 experimentID: dataPipeExperimentId,
-                filename: prefix + '-' + participantId + '.csv',
-                data: results,
+                filename: `${prefix}-${participantId}.csv`,,
+                data: fullResults,
             }),
-        }).then(data => {
-            console.log(data);
+        }).then(() => {
             jsPsych.finishTrial();
         })
     }
 }
 timeline.push(resultsTrial);
-
-let debriefTrial = {
-    type: jsPsychHtmlKeyboardResponse,
-    stimulus: ``,
-        choices: [' '],
-
-    on_start: function() {
-        // This triggers the communication handshake with Qualtrics
-        window.parent.postMessage({
-            type: 'jsPsych_finish',
-            csvData: jsPsych.data.get().csv()
-        }, "*");
-    }
-};
-timeline.push(debriefTrial);
 
 jsPsych.run(timeline);
