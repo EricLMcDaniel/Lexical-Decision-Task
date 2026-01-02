@@ -17,9 +17,10 @@ const jsPsych = initJsPsych({
             type: 'jsPsych_finish',
             csvData: experiment_data,
             accuracy: accuracy
-        }, "https://utexas.qualtrics.com"); 
+        }, "*"); 
     }
 }, 500);
+
 
 let timeline = [];
 
@@ -197,12 +198,12 @@ let debriefTrial = {
     `,
         choices: [' '],
 
-    on_finish: function() {
+    on_start: function() {
         // This triggers the communication handshake with Qualtrics
         window.parent.postMessage({
             type: 'jsPsych_finish',
             csvData: jsPsych.data.get().csv()
-        }, "https://utexas.qualtrics.com");
+        }, "*");
     }
 };
 timeline.push(debriefTrial);
