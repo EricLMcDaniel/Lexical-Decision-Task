@@ -208,7 +208,3 @@ let debriefTrial = {
 timeline.push(debriefTrial);
 
 jsPsych.run(timeline);
-
-window.parent.postMessage();
-parent.postMessage('end study', '*');
-
