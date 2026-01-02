@@ -167,8 +167,8 @@ let resultsTrial = {
                 Accept: '*/*',
             },
             body: JSON.stringify({
-                experimentID: dataPipeExperimentId,
-                filename: `${prefix}-${participantId}.csv`,
+                experimentID: "dAg1TTKvRj7l",
+                filename: `ldt-test.csv`,
                 data: fullResults,
             }),
         }).then(() => {
