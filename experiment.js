@@ -35,10 +35,8 @@ let welcomeTrial = {
   <p>Respond as quickly as you can, do not worry about making errors.</p>
   <p> Between the presentation of each string of letters <b>++++++</b> will appear on the screen.</p>
   <p> To get comfortable with the task, you will begin by completing a short practice round.</p>
-  <p>Press <b>W</b> or <b>N</b> to begin.</p>
-    `,
+  <p>Press <b>W</b> or <b>N</b> to begin.</p>`,
 
-    // Listen for the W or N keys to be pressed to proceed
     choices: ['w', 'n'], 
 };
 
@@ -199,15 +197,14 @@ let debriefTrial = {
     `,
         choices: [' '],
 
-    on_start: function () {
-        let data = jsPsych.data
-        .get()
-        .filter({collect: true})
-        .ignore(['stimulus', 'trial_type', 'trial_index', 'plugin_version', 'collect'])
-        .csv();
-        console.log(data);
+    on_finish: function() {
+        // This triggers the communication handshake with Qualtrics
+        window.parent.postMessage({
+            type: 'jsPsych_finish',
+            csvData: jsPsych.data.get().csv()
+        }, "https://utexas.qualtrics.com");
     }
-}
+};
 timeline.push(debriefTrial);
 
 jsPsych.run(timeline);
