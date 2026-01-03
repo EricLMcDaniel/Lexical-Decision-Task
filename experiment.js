@@ -168,14 +168,14 @@ let resultsTrial = {
             },
             body: JSON.stringify({
                 experimentID: "dAg1TTKvRj7l",
-                filename: `ldt-${participantId}.csv`,
+                filename: `ldt-${participantId}-${Date.now()}.csv`,
                 data: fullResults,
             }),
         }).then(() => {
             jsPsych.finishTrial();
         })
     }
-}
+};
 timeline.push(resultsTrial);
 
 jsPsych.run(timeline);
